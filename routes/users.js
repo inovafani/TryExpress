@@ -1,6 +1,5 @@
 import express from 'express';
-import { v4 as uuidv4 } from 'uuid';
-import User from '../models/users.model';
+import User from '../models/users.model.js';
 
 const router = express.Router();
 
@@ -12,7 +11,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const user = await User.findById(id);
-  res.send(users);
+  res.send(user);
 });
 
 router.post('/', async (req, res) => {

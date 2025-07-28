@@ -2,10 +2,7 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/tryexpress', {
-      useNewUrlParser: true,
-      userUnifiedTopology: true,
-    });
+    await mongoose.connect('mongodb://localhost:27017/tryexpress');
     console.log('MongoDB Connected');
   } catch (err) {
     console.log(err.message);
