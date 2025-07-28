@@ -1,35 +1,32 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
+import User from '../models/users.model';
+
 const router = express.Router();
 
-let users = [];
-
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  const users = await User.find();
   res.send(users);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
-
-  const foundUser = users.find((user) => user.id === id);
-
-  res.send(foundUser);
+  const user = await User.findById(id);
+  res.send(users);
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const user = req.body;
-
-  users.push({ ...user, id: uuidv4() });
+  const newUser = new User(user);
+  await newUser.save();
 
   res.send(`${user.first_name} has been added to the database`);
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
-
-  users = users.filter((user) => user.id !== id);
-
-  res.send(`${id} deleted succesfully from database`);
+  await User.findByIdAndDelete(id);
+  res.send(`${id} deletet successfully from database`);
 });
 
 export default router;
