@@ -22,6 +22,14 @@ router.post('/', async (req, res) => {
   res.send(`${user.first_name} has been added to the database`);
 });
 
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const updates = req.body;
+
+  const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true });
+  res.send(updatedUser);
+});
+
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   await User.findByIdAndDelete(id);
